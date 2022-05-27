@@ -77,6 +77,18 @@ log() {
 	echo "rorootfs-overlay: $1" >$CONSOLE
 }
 
+wait_for_device() {
+    counter=0
+    while [ ! -b $1 ]; do
+        sleep .100
+        counter=$((counter + 1))
+        if [ $counter -ge 50 ]; then
+            fatal "$1 is not availble"
+            exit
+        fi
+    done
+}
+
 early_setup
 
 [ -z "${CONSOLE+x}" ] && CONSOLE="/dev/console"
@@ -89,6 +101,7 @@ mount_and_boot() {
 	# Build mount options for read only root file system.
 	# If no read-only device was specified via kernel command line, use
 	# current root file system via bind mount.
+    wait_for_device ${ROOT_RODEVICE}
 	ROOT_ROMOUNTPARAMS_BIND="-o ${ROOT_ROMOUNTOPTIONS} /"
 	if [ -n "${ROOT_RODEVICE}" ]; then
 		ROOT_ROMOUNTPARAMS="-o ${ROOT_ROMOUNTOPTIONS_DEVICE} $ROOT_RODEVICE"
@@ -123,6 +136,7 @@ mount_and_boot() {
 	# Build mount options for read write root file system.
 	# If a read-write device was specified via kernel command line, use
 	# it, otherwise default to tmpfs.
+    wait_for_device ${ROOT_RWDEVICE}
 	if [ -n "${ROOT_RWDEVICE}" ]; then
 		
 		ROOT_RWMOUNTPARAMS="-o $ROOT_RWMOUNTOPTIONS_DEVICE $ROOT_RWDEVICE"
