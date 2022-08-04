@@ -14,5 +14,11 @@ do_install() {
 
 FILES:${PN} += " /init /media/rfs"
 
+QA_EMPTY_DIRS:remove = "/media"
+QA_EMPTY_DIRS:append = " \
+    /media/rfs/ro \
+    /media/rfs/rw \
+"
+
 # Due to kernel dependency
 PACKAGE_ARCH = "${MACHINE_ARCH}"
