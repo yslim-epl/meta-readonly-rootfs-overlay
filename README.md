@@ -41,13 +41,13 @@ This layer depends on:
 
 ```
   URI: git://git.openembedded.org/bitbake
-  branch: kirkstone
+  branch: mickledore
 ```
 
 ```
   URI: git://git.openembedded.org/openembedded-core
   layers: meta
-  branch: kirkstone
+  branch: mickledore
 ```
 
 # Patches
