@@ -41,13 +41,13 @@ This layer depends on:
 
 ```
   URI: git://git.openembedded.org/bitbake
-  branch: mickledore
+  branch: nanbield
 ```
 
 ```
   URI: git://git.openembedded.org/openembedded-core
   layers: meta
-  branch: mickledore
+  branch: nanbield
 ```
 
 # Patches
